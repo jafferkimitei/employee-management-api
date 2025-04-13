@@ -2,9 +2,10 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../app'); 
 const Employee = require('../models/Employee'); 
+require('dotenv').config({ path: '.env.test' });
 
 beforeAll(async () => {
-  await mongoose.connect('mongodb://localhost:27017/yourTestDatabase', {
+    await mongoose.connect(process.env.MONGO_TEST_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
@@ -51,7 +52,7 @@ describe('POST /employees', () => {
     };
 
     const res = await request(app).post('/employees').send(employeeData);
-    expect(res.status).toBe(201); // Check that the status is created
+    expect(res.status).toBe(201);
     expect(res.body.employeeId).toBe(employeeData.employeeId);
     expect(res.body.fullName).toBe(employeeData.fullName);
   });

@@ -1,11 +1,13 @@
+require('dotenv').config();
+
 const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
 const Employee = require('./models/Employee');
 
-mongoose.connect('mongodb://localhost:27017/yourDatabaseName', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log('MongoDB connected!'))
   .catch((err) => console.log('Error connecting to MongoDB:', err));
 
